@@ -37,11 +37,7 @@ jobs:
         run: |
               ver=${{matrix.python-version}}
               ver_num=${ver//./}
-              if (( ver_num >= 310 )); then
-                sudo apt-get update && apt-get install -y python${ver} python3-pip sudo curl git libssl-dev libffi-dev python3-setuptools-rust cargo
-              else
-                sudo apt-get update && sudo apt-get install -y python${ver} python3-pip sudo curl git libssl-dev libffi-dev python${ver}-dev cargo
-              fi
+              sudo apt-get update && sudo apt-get install -y python3-pip python3-setuptools-rust 
               sudo ln -sf /usr/bin/python${ver} /usr/bin/python
       - name: Install dependencies
         run: |
