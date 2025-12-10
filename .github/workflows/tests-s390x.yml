@@ -37,7 +37,7 @@ jobs:
         run: |
               ver=${{matrix.python-version}}
               ver_num=${ver//./}
-              sudo apt-get update && sudo apt-get install -y python3-pip python3-setuptools-rust 
+              sudo apt-get update && sudo apt-get install -y python${ver} python${ver}-dev 
               sudo ln -sf /usr/bin/python${ver} /usr/bin/python
       - name: Install dependencies
         run: |
