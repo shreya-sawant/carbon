@@ -33,7 +33,6 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: |
               ver=${{matrix.python-version}}
-              sudo apt-get update && sudo apt-get install -y python3-pip sudo curl git libssl-dev libffi-dev python${ver}-dev cargo 
               if [[ ${{matrix.python-version}} == '3.8' && ${{matrix.python-version}} == '3.9' ]]; then
                 sudo apt-get update
                 sudo apt-get install -y build-essential zlib1g-dev libssl-dev \
