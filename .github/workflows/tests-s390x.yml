@@ -33,11 +33,30 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: |
               ver=${{matrix.python-version}}
-              sudo apt-get update && sudo apt-get install -y python${ver} python3-pip sudo curl git libssl-dev libffi-dev python${ver}-dev cargo 
-              if [[ ${{matrix.python-version}} == '3.*' && ${{matrix.python-version}} != '3.12' ]]; then
-                sudo apt-get install -y python3-setuptools-rust
+              sudo apt-get update && sudo apt-get install -y python3-pip sudo curl git libssl-dev libffi-dev python${ver}-dev cargo 
+              if [[ ${{matrix.python-version}} == '3.8' && ${{matrix.python-version}} == '3.9' ]]; then
+                sudo apt-get update
+                sudo apt-get install -y build-essential zlib1g-dev libssl-dev \
+                     libffi-dev libbz2-dev libsqlite3-dev libreadline-dev liblzma-dev \
+                     tk-dev libncurses5-dev uuid-dev wget
+                wget https://www.python.org/ftp/python/${ver}.*/Python-${ver}.*.tgz
+                tar -xf Python-${ver}.*.tgz
+                cd Python-${ver}.*/ || exit 1
+                ./configure --enable-optimizations
+                make -j"$(nproc)"
+                sudo make altinstall
+                sudo ln -sf /usr/local/bin/python${ver} /usr/bin/python${ver}
+                sudo ln -sf /usr/local/bin/pip${ver} /usr/bin/pip${ver}
+              elif [[ ${{matrix.python-version}} == '3.10' && ${{matrix.python-version}} == '3.11' ]]; then
+                sudo apt-get install -y python${ver} python3-pip python${ver}-dev
+                sudo update-alternatives --install /usr/bin/python python /usr/bin/python${ver} 1
+                sudo update-alternatives --set python /usr/bin/python${ver}
+              elif [[ ${{matrix.python-version}} == '3.12' ]]; then
+                sudo update-alternatives --install /usr/bin/python python /usr/bin/python${ver} 1
+                sudo update-alternatives --set python /usr/bin/python${ver}
               fi
-              sudo ln -sf /usr/bin/python${ver} /usr/bin/python
+              sudo update-alternatives --install /usr/bin/python python /usr/bin/python${ver} 1
+              sudo update-alternatives --set python /usr/bin/python${ver}
               python --version
       - name: Install dependencies
         run: |
