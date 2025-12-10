@@ -33,8 +33,10 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: |
               ver=${{matrix.python-version}}
-              ver_num=${ver//./}
-              sudo apt-get update && sudo apt-get install -y python${ver} python${ver}-dev 
+              sudo apt-get update && sudo apt-get install -y python${ver} python3-pip sudo curl git libssl-dev libffi-dev python${ver}-dev cargo 
+              if [[ ${{matrix.python-version}} == '3.*' && ${{matrix.python-version}} != '3.12' ]]; then
+                sudo apt-get install -y python3-setuptools-rust
+              fi
               sudo ln -sf /usr/bin/python${ver} /usr/bin/python
       - name: Install dependencies
         run: |
