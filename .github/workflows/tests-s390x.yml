@@ -38,7 +38,7 @@ jobs:
             if [[ ${{matrix.python-version}} == 3.* ]]; then
               ver=${{matrix.python-version}}
               apt-get update && apt-get install -y python${ver} python3-pip sudo curl git libssl-dev libffi-dev python${ver}-dev cargo 
-              if [[ ${{matrix.python-version}} <= '3.10' ]]; then
+              if [[ ${{matrix.python-version}} >= '3.10' ]]; then
                 apt-get update && apt-get install -y python3-setuptools-rust
               fi
               sudo ln -s /usr/bin/python${ver} /usr/bin/python
