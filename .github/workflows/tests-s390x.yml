@@ -44,6 +44,7 @@ jobs:
           python -m pip install --upgrade pip 'setuptools<58' --force-reinstall
           pip install 'tox<4' tox-gh-actions flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Tests with tox
         env:
           TOXENV: ${{ matrix.toxenv }}
