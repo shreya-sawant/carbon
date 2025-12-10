@@ -45,14 +45,11 @@ jobs:
                 make -j"$(nproc)"
                 sudo make altinstall
                 sudo ln -sf /usr/local/bin/python${ver} /usr/bin/python${ver}
-                sudo ln -sf /usr/local/bin/pip${ver} /usr/bin/pip${ver}
               elif [[ ${{matrix.python-version}} == '3.10' && ${{matrix.python-version}} == '3.11' ]]; then
                 sudo apt-get install -y python${ver} python3-pip python${ver}-dev
-                sudo update-alternatives --install /usr/bin/python python /usr/bin/python${ver} 1
-                sudo update-alternatives --set python /usr/bin/python${ver}
+                sudo ln -sf /usr/bin/python${ver} /usr/bin/python${ver}
               elif [[ ${{matrix.python-version}} == '3.12' ]]; then
-                sudo update-alternatives --install /usr/bin/python python /usr/bin/python${ver} 1
-                sudo update-alternatives --set python /usr/bin/python${ver}
+                sudo ln -sf /usr/bin/python${ver} /usr/bin/python${ver}
               fi
               sudo update-alternatives --install /usr/bin/python python /usr/bin/python${ver} 1
               sudo update-alternatives --set python /usr/bin/python${ver}
