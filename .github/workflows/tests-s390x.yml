@@ -22,6 +22,9 @@ jobs:
           - name: "Python 3.10"
             python-version: '3.10'
             toxenv: 'py310'
+          - name: "Pypy 3.10"
+            python-version: 'pypy-3.10'
+            toxenv: 'pypy3'
           - name: "Python 3.11"
             python-version: '3.11'
             toxenv: 'py311'
@@ -29,31 +32,12 @@ jobs:
             python-version: '3.12'
             toxenv: 'py312'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
-        run: |
-              ver=${{matrix.python-version}}
-              if [[ ${{matrix.python-version}} == '3.8' && ${{matrix.python-version}} == '3.9' ]]; then
-                sudo apt-get update
-                sudo apt-get install -y build-essential zlib1g-dev libssl-dev \
-                     libffi-dev libbz2-dev libsqlite3-dev libreadline-dev liblzma-dev \
-                     tk-dev libncurses5-dev uuid-dev wget
-                wget https://www.python.org/ftp/python/${ver}.*/Python-${ver}.*.tgz
-                tar -xf Python-${ver}.*.tgz
-                cd Python-${ver}.*/ || exit 1
-                ./configure --enable-optimizations
-                make -j"$(nproc)"
-                sudo make altinstall
-                sudo ln -sf /usr/local/bin/python${ver} /usr/bin/python${ver}
-              elif [[ ${{matrix.python-version}} == '3.10' && ${{matrix.python-version}} == '3.11' ]]; then
-                sudo apt-get install -y python${ver} python3-pip python${ver}-dev
-                sudo ln -sf /usr/bin/python${ver} /usr/bin/python
-              elif [[ ${{matrix.python-version}} == '3.12' ]]; then
-                sudo ln -sf /usr/bin/python${ver} /usr/bin/python
-              fi
-              sudo update-alternatives --install /usr/bin/python python /usr/bin/python${ver} 1
-              sudo update-alternatives --set python /usr/bin/python${ver}
-              python --version
+        uses: ibm/setup-pz@v6
+        with:
+          architecture: s390x
+          python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip 'setuptools<58' --force-reinstall
