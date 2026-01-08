@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
-        uses: ibm/setup-python-pz@v6
+        uses: ibm/setup-python-pz@main
         with:
           architecture: s390x
           python-version: ${{ matrix.python-version }}
