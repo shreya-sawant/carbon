@@ -34,7 +34,7 @@ jobs:
         env:
           TOXENV: ${{ matrix.toxenv }}
         run: |
-          tox
+          tox -e py312
       - name: Linting
         if: ${{ matrix.python-version==3.12 }}
         env:
