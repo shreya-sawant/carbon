@@ -29,12 +29,19 @@ jobs:
           pip install 'tox<4' tox-gh-actions flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           echo "$HOME/.local/bin" >> $GITHUB_PATH
-          
+      - name: Add local bin to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install cryptography from source (for s390x + Py3.14)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libssl-dev libffi-dev python3.14-dev pkg-config
+          pip wheel --no-binary cryptography cryptography
+          pip install cryptography-*.whl
       - name: Tests with tox
         env:
           TOXENV: ${{ matrix.toxenv }}
         run: |
-          tox -e py312
+          tox
       - name: Linting
         if: ${{ matrix.python-version==3.12 }}
         env:
