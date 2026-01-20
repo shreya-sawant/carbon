@@ -33,7 +33,6 @@ jobs:
       - name: Tests with tox
         env:
           TOXENV: ${{ matrix.toxenv }}
-          COVERAGE_PROCESS_START: ""
         run: |
           tox
       - name: Linting
