@@ -34,7 +34,7 @@ jobs:
       - name: Install cryptography from source (for s390x + Py3.14)
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libssl-dev libffi-dev python3.14-dev pkg-config
+          sudo apt-get install -y build-essential libssl-dev libffi-dev pkg-config
           pip wheel --no-binary cryptography cryptography
           pip install cryptography-*.whl
       - name: Tests with tox
