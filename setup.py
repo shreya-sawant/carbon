@@ -3,6 +3,7 @@
 from __future__ import with_statement
 
 import os
+import sys
 from glob import glob
 try:
     from ConfigParser import ConfigParser, DuplicateSectionError  # Python 2
@@ -49,13 +50,16 @@ else:
 with open('setup.cfg', 'w') as f:
     cf.write(f)
 
-
-if os.environ.get('USE_SETUPTOOLS'):
-  from setuptools import setup
-  setup_kwargs = dict(zip_safe=0)
+if sys.version_info >= (3, 12):
+    # Python 3.12+ distutils removed
+    from setuptools import setup
+    setup_kwargs = dict(zip_safe=0)
+elif os.environ.get('USE_SETUPTOOLS'):
+    from setuptools import setup
+    setup_kwargs = dict(zip_safe=0)
 else:
-  from distutils.core import setup
-  setup_kwargs = dict()
+    from distutils.core import setup
+    setup_kwargs = dict()
 
 
 storage_dirs = [ ('storage/ceres/dummy.txt', []), ('storage/whisper/dummy.txt',[]),
