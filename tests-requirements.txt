@@ -2,7 +2,8 @@ coverage
 mock
 mocker
 nose
-protobuf
+protobuf==6.32.1; platform_machine == "s390x"
+protobuf; platform_machine != "s390x"
 mmh3
 cryptography
 git+https://github.com/graphite-project/ceres.git#egg=ceres
