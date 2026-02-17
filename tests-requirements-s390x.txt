@@ -1,0 +1,10 @@
+coverage==7.4.4
+mock==5.1.0
+mocker==1.1.1
+nose==1.3.7
+protobuf==4.25.3
+mmh3==4.1.0
+cryptography==42.0.8
+git+https://github.com/graphite-project/ceres.git#egg=ceres
+backports.tempfile
+service_identity==23.1.0
